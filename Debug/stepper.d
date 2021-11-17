@@ -1,0 +1,1 @@
+stepper.o: ../stepper.c
