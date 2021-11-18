@@ -10,6 +10,7 @@
 
 typedef enum {
 	INIT,
+	CALIBRATING,
 	RUNNING,
 	IDLE
 } State;
