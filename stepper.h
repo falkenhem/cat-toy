@@ -35,7 +35,9 @@ void setPositionStepper(uint16_t position, StepperIdentification stepperIdentifi
 
 uint16_t getRandomRelevantPosition(StepperIdentification stepperIdentification);
 
-void getPositionStepper(StepperIdentification stepperIdentification);
+uint16_t getStepperPosition(StepperIdentification stepperIdentification);
+
+void setPositionInSteps(uint16_t steps);
 
 
 #endif /* STEPPER_H_ */

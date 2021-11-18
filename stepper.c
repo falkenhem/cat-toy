@@ -2,13 +2,14 @@
 #include <avr/interrupt.h>
 #include <stdlib.h>
 #include "stepper.h"
+#include "serialCommunication.h"
 
 
 typedef struct Stepper{
 	volatile uint8_t direction;
-	uint16_t position;
+	volatile uint16_t position;
 	volatile uint16_t stepsToRun;
-	uint8_t lengthSync;
+	volatile uint8_t lengthSync;
 	volatile uint8_t activeCoil;
 } Stepper;
 
@@ -63,20 +64,31 @@ void runLength(Stepper *stepper, uint16_t lengthInDegress, Direction direction){
 	START_STEPPER_A;
 }
 
+uint16_t translateStepToDegrees(uint16_t steps){
+	uint16_t degrees;
+	degrees = steps/3;
+	degrees = (degrees * 17)/100;
+
+	return degrees;
+}
+
 void setPositionStepper(uint16_t position, StepperIdentification stepperIdentification){
 	uint16_t length;
 	Direction direction;
+
+	uint16_t currentPosition;
+	currentPosition = translateStepToDegrees(stepperA.position);
 
 	switch (stepperIdentification){
 	case A:
 		stepperA.lengthSync = 0;
 
-		if (position > stepperA.position){
+		if (position > currentPosition){
 			direction = CW;
-			length = position - stepperA.position;
+			length = position - currentPosition;
 		} else {
 			direction = CCW;
-			length = stepperA.position - position;
+			length = currentPosition - position;
 		}
 		runLength(stepperApointer, length, direction);
 		break;
@@ -125,6 +137,25 @@ uint16_t getRandomRelevantPosition(StepperIdentification stepperIdentification){
 	uint16_t randomPosition = rand() % 100;
 
 	return randomPosition;
+}
+
+void setPositionInSteps(uint16_t steps){
+	uint16_t stepsToMove;
+	Direction direction;
+
+	stepperA.lengthSync = 0;
+
+	if (stepperA.position > steps) {
+		direction = CCW;
+		stepsToMove = stepperA.position - steps;
+	} else {
+		direction = CW;
+		stepsToMove = steps - stepperA.position;
+	}
+
+
+	stepperA.direction = direction;
+	stepperA.stepsToRun = stepsToMove;
 }
 
 

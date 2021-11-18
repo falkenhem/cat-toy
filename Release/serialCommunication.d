@@ -1,0 +1,1 @@
+serialCommunication.o: ../serialCommunication.c

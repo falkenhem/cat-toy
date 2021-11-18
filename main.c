@@ -19,7 +19,7 @@ int main()
 
 	TCCR0A |= 1<<WGM01; //Clear timer when comparison kicks in
 	TCCR0B = (1<<CS00) | (1<<CS02);; //Set prescalar to 1024
-	OCR0A = calculateTimerFromStepInterval(2);
+	OCR0A = calculateTimerFromStepInterval(3);
 	TIMSK0 |= 1 << OCIE0A;
 
 	sei();
@@ -29,19 +29,9 @@ int main()
 	{
 		stateMachine();
 
-//		if (getCurrentState() == INIT){
-//
-//			changeState(IDLE);
-//		}
-//		if (getCurrentState() == IDLE && stepperA.stepsToRun == 0){
-//			STOP_STEPPER_A;
-//		}
-
 	}
 
 }
-
-
 
 static uint8_t calculateTimerFromStepInterval(uint8_t stepIntervalInMs){
 	//Presumes prescalar set to 1024
