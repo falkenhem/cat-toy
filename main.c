@@ -19,13 +19,13 @@ int main()
 
 	TCCR0A |= 1<<WGM01; //Clear timer when comparison kicks in
 	TCCR0B = (1<<CS00) | (1<<CS02);; //Set prescalar to 1024
-	OCR0A = calculateTimerFromStepInterval(3);
+	OCR0A = calculateTimerFromStepInterval(4);
 	TIMSK0 |= 1 << OCIE0A;
 
 	DDRB = 0xFF;
 	TCCR2A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
 	TCCR2B = _BV(CS22) | _BV(CS21) | _BV(CS20);
-	OCR2A = 130;
+	OCR2A = 90;
 
 	sei();
 	initializeSteppers();

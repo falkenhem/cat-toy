@@ -14,28 +14,28 @@ void stateMachine(){
 	switch (currentState){
 	case INIT:
 		uart_init();
-		setLengthAndDirectionStepper(50, CCW, A);
+		setLengthAndDirectionStepper(50, CCW, getStepperPointer(A));
 		changeState(CALIBRATING);
 		break;
 	case CALIBRATING:
-		if (positionReachedStepper(A)){
+		if (positionReachedStepper(getStepperPointer(A))){
 			STOP_STEPPER_A;
 			setZeroPosition(A);
 			changeState(RUNNING);
 		}
 		break;
 	case RUNNING:
-		if (positionReachedStepper(A)){
+		if (positionReachedStepper(getStepperPointer(A))){
 			STOP_STEPPER_A;
-			uart_putstr(utoa(getStepperPosition(A), buffer, 10));
+			uart_putstr(utoa(getStepperPosition(getStepperPointer(A)), buffer, 10));
 			uart_putstr("new random value\n");
-			setPositionStepper(getRandomRelevantPosition(A), A);
-			OCR2A = getRandomRelevantPosition(A);
+			setPositionStepper(getRandomRelevantPosition(), getStepperPointer(A));
+			OCR2A = getRandomRelevantPosition();
 		}
 		break;
 
 	case IDLE:
-		if (positionReachedStepper(A)){
+		if (positionReachedStepper(getStepperPointer(A))){
 			STOP_STEPPER_A;
 
 		}

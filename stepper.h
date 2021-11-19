@@ -17,25 +17,35 @@ typedef enum StepperIdentification {
 	B
 } StepperIdentification;
 
+typedef struct Stepper{
+	uint8_t direction;
+	volatile uint16_t position;
+	volatile uint16_t stepsToRun;
+	volatile uint8_t lengthSync;
+	volatile uint8_t activeCoil;
+} Stepper;
+
 typedef enum Direction {CW = 1, CCW = 0} Direction;
 
-void setLengthAndDirectionStepper(uint16_t lengthInDegrees, Direction direction, StepperIdentification stepperIdentification);
+void setLengthAndDirectionStepper(uint16_t lengthInDegrees, Direction direction, Stepper *stepperPointer);
 
-void setStepperSpeed(StepperIdentification stepperIdentification, uint8_t speed);
+void setStepperSpeed(Stepper *stepperPointer, uint8_t speed);
 
-uint8_t positionReachedStepper(StepperIdentification stepperIdentification);
+uint8_t positionReachedStepper(Stepper *stepperPointer);
 
-void clearLengthSync(StepperIdentification stepperIdentification);
+void clearLengthSync(Stepper *stepperPointer);
 
 void initializeSteppers();
 
-void setZeroPosition(StepperIdentification stepperIdentification);
+void setZeroPosition(Stepper *stepperPointer);
 
-void setPositionStepper(uint16_t position, StepperIdentification stepperIdentification);
+void setPositionStepper(uint16_t position, Stepper *stepperPointer);
 
-uint16_t getRandomRelevantPosition(StepperIdentification stepperIdentification);
+uint16_t getRandomRelevantPosition();
 
-uint16_t getStepperPosition(StepperIdentification stepperIdentification);
+uint16_t getStepperPosition(Stepper *stepperPointer);
+
+Stepper *getStepperPointer(StepperIdentification stepperIdentification);
 
 void setPositionInSteps(uint16_t steps);
 
