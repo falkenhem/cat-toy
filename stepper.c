@@ -136,6 +136,8 @@ uint16_t getStepperPosition(StepperIdentification stepperIdentification){
 uint16_t getRandomRelevantPosition(StepperIdentification stepperIdentification){
 	uint16_t randomPosition = rand() % 100;
 
+	randomPosition += 30;
+
 	return randomPosition;
 }
 
