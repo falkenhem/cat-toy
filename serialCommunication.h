@@ -8,9 +8,8 @@
 #ifndef SERIALCOMMUNICATION_H_
 #define SERIALCOMMUNICATION_H_
 
-//void uart_putstr(char *data);
 void uart_init();
 void uart_TransmitPolling();
-
+void uart_putstr(char *data);
 
 #endif /* SERIALCOMMUNICATION_H_ */

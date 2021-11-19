@@ -1,46 +1,3 @@
-//#ifndef F_CPU
-//#define F_CPU 16000000UL
-//#endif
-//
-//#ifndef BAUD
-//#define BAUD 9600
-//#endif
-//
-//#include <stdio.h>
-//#include <avr/io.h>
-//#include <util/delay.h>
-//#include <util/setbaud.h>
-//
-//#define USART_BAUDRATE 9600
-//#define BAUD_PRESCALER (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
-//
-//void uart_init() {
-//    // Upper and lower bytes of the calculated prescaler value for baud.
-//	UBRR0H = BAUD_PRESCALER >> 8;
-//	UBRR0L = BAUD_PRESCALER;
-//
-//    // Configure data frame size to 8-bits.
-//    UCSR0C = _BV(UCSZ01) | _BV(UCSZ00);
-//
-//    // Configure to enable transmitter.
-//    UCSR0B = _BV(TXEN0);
-//}
-//
-//void uart_putchar(char c) {
-//    // Wait until the register to write to is free.
-//    loop_until_bit_is_set(UCSR0A, UDRE0);
-//
-//    // Write the byte to the register.
-//    UDR0 = c;
-//}
-//
-//void uart_putstr(char *data) {
-//    // Loop until end of string writing char by char.
-//    while(*data){
-//      uart_putchar(*data++);
-//    }
-//}
-
 #define F_CPU 16000000UL // Defining the CPU Frequency
 
 #include <avr/io.h>      // Contains all the I/O Register Macros
@@ -84,3 +41,19 @@ void uart_TransmitPolling(uint8_t DataByte)
 	while (( UCSR0A & (1<<UDRE0)) == 0) {}; // Do nothing until UDR is ready
 	UDR0 = DataByte;
 }
+
+void uart_putchar(char c) {
+    // Wait until the register to write to is free.
+    loop_until_bit_is_set(UCSR0A, UDRE0);
+
+    // Write the byte to the register.
+    UDR0 = c;
+}
+
+void uart_putstr(char *data) {
+    // Loop until end of string writing char by char.
+    while(*data){
+      uart_putchar(*data++);
+    }
+}
+

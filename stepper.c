@@ -6,7 +6,7 @@
 
 
 typedef struct Stepper{
-	volatile uint8_t direction;
+	uint8_t direction;
 	volatile uint16_t position;
 	volatile uint16_t stepsToRun;
 	volatile uint8_t lengthSync;
@@ -135,8 +135,6 @@ uint16_t getStepperPosition(StepperIdentification stepperIdentification){
 
 uint16_t getRandomRelevantPosition(StepperIdentification stepperIdentification){
 	uint16_t randomPosition = rand() % 100;
-
-	randomPosition += 30;
 
 	return randomPosition;
 }

@@ -19,7 +19,7 @@ int main()
 
 	TCCR0A |= 1<<WGM01; //Clear timer when comparison kicks in
 	TCCR0B = (1<<CS00) | (1<<CS02);; //Set prescalar to 1024
-	OCR0A = calculateTimerFromStepInterval(8);
+	OCR0A = calculateTimerFromStepInterval(4);
 	TIMSK0 |= 1 << OCIE0A;
 
 	sei();
