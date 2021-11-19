@@ -30,11 +30,11 @@ ISR (TIMER0_COMPA_vect)
 {
 	switch (stepperA.direction){
 	case CW:
-		PORTB = (0b1000 >> stepperA.activeCoil);
+		PORTD = (0b00100000 >> stepperA.activeCoil);
 		stepperA.position++;
 		break;
 	case CCW:
-		PORTB = (0b0001 << stepperA.activeCoil);
+		PORTD = (0b00000100 << stepperA.activeCoil);
 		if (stepperA.position){
 			stepperA.position--;
 		}

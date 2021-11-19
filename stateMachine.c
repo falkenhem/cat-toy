@@ -30,6 +30,7 @@ void stateMachine(){
 			uart_putstr(utoa(getStepperPosition(A), buffer, 10));
 			uart_putstr("new random value\n");
 			setPositionStepper(getRandomRelevantPosition(A), A);
+			OCR2A = getRandomRelevantPosition(A);
 		}
 		break;
 

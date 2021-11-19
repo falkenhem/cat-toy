@@ -8,7 +8,7 @@
 #ifndef STEPPER_H_
 #define STEPPER_H_
 
-#define PORT_STEPPER_A PORTB
+#define PORT_STEPPER_A PORTD
 #define STOP_STEPPER_A PRR |= 1<<PRTIM0
 #define START_STEPPER_A PRR &= ~(1<<PRTIM0)
 
